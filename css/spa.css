@@ -1,0 +1,62 @@
+/*spa.css*/
+/*Root namespace styles*/
+
+/*Being Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,h6,p {margin-bottom: 10px;}
+ol, ul, dl {list-style-position: inside;}
+/*End reset*/
+
+/*Being Standard Selector*/
+body {
+    font: 13px 'Trebuchet MS', Verdana, Helvetica, Aria, sans-serif;
+    color: #444;
+    background-color: #888;
+}
+
+a { text-decoration: none; }
+/*pseudo classes*/
+a:link, a:visited { color: inherit; }
+a:hover { text-decoration: underline; }
+
+strong {
+    font-weight: 800; /*from 100 to 900, a measure of thickness of characters */
+    color: #000; /*hex color*/
+}
+/*End standard Selectors*/
+
+/*Being spa namespace selectors*/
+#spa {
+    position: absolute; /*relative to first parent that has position other than static*/
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+
+    min-height: 500px;
+    min-width: 500px;
+    overflow: hidden;
+
+    background-color: #fff;
+    border-radius: 0 8px 0 8px;
+}
+
+/*End spa namespace selector*/
+
+/*Begin Utility Selectors*/
+.spa-x-select {}
+.spa-x-clearfloat {
+    height: 0 !important;
+    float: none !important;
+    visibility: hidden !important;
+    clear: both !important;
+}
+/*end utility selectors*/
+
