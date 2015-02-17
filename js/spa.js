@@ -1,6 +1,10 @@
 //spa.js
 //root namespace module
 
+/********** BEGIN MY IMPRESSIONS ************/
+/* this appears to to be extremely minimal and usable for any spa. seems we always delegate the real work to the shell. */
+/********** END MY IMPRESSIONS ************/
+
 /*jslint
  browser: true, continue: true
   devel: true,   indent: 2,      maxerr: 50,

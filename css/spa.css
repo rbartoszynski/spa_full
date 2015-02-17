@@ -1,6 +1,11 @@
 /*spa.css*/
 /*Root namespace styles*/
 
+
+/******** BEGIN MY IMPRESSIONS ***********/
+/* seems like these are selectors that aren't specific to any of the spa components; these are like global styles for certain types of elements */
+/******** END MY IMPRESSIONS ***********/
+
 /*Being Reset*/
 * {
     margin: 0;

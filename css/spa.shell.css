@@ -1,6 +1,12 @@
 /*spa.shell.css*/
 /*Shell styles*/
 
+/******** BEGIN MY IMPRESSIONS ***********/
+/* these are only for elements in the layout defined by the shell. */
+/* and the main funciton is to specify size. the feature modules will surely */
+/* have some control over styling at that point; they can override these selectors i guess */
+/******** END MY IMPRESSIONS ***********/
+
 .spa-shell-head, .spa-shell-head-logo, .spa-shell-head-acct, .spa-shell-head-search,
 .spa-shell-main, .spa-shell-main-nav,
 .spa-shell-main-content, .spa-shell-foot, .spa-shell-chat,

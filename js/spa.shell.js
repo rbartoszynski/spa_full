@@ -1,6 +1,18 @@
 //spa.shell.js
 //shell module for spa
 
+/********** BEGIN MY IMPRESSIONS ************/
+/* still not entirely sure what the scope of this should be. some of the code may be moved out..don't know.
+* books says:
+* Rendering and managing feature containers. I SEE: rendering. managing? Perhaps; managing by delegating to feature modules is a form of managing.
+* Managing the application state. I SEE: Yup. We use the URI Anchor convention for managing application state.
+* Coordinating feature modules. I SEE: Sure. We initialize modules. And any communication that needs to happen between them should be facilitated by the shell.
+*
+* so, in other words: the shell makes the app GO by dealing with application state and delegating work to feature modules. In delegating to feature modules there
+* still exists work in coordinating work between multiple feature modules and configuring the feature modules correctly.
+*/
+ /********** END MY IMPRESSIONS ************/
+
 /*jslint browser:true, continue: true, devel:true, indent:2,
 maxerr: 50, newcap: true, nomen: true, plusplus: true,
 regexp: true, sloppy: true, vars: false, white: true
@@ -44,9 +56,9 @@ spa.shell = (function() {
             $container: null,
             is_chat_retracted: true
         },
-        jQueryMap = {},
+        jqueryMap = {},
 
-        copyAnchorMap, setJqueryMap, toggleChat, changeAnchorPart, onHashchange, onClickChat, initModule;
+        copyAnchorMap, setjqueryMap, toggleChat, changeAnchorPart, onHashchange, onClickChat, initModule;
 
     //------------------------------BEGIN UTILITY METHODS------------------------------//
     // Returns copy of stored anchor map; minimizes overhead
@@ -58,10 +70,10 @@ spa.shell = (function() {
     //------------------------------BEGIN DOM METHODS------------------------------//
 
 
-    //Begin DOM method /setJqueryMap/
-    setJqueryMap = function () {
+    //Begin DOM method /setjqueryMap/
+    setjqueryMap = function () {
         var $container = stateMap.$container;
-        jQueryMap = {
+        jqueryMap = {
             $container: $container,
             $chat: $container.find(".spa-shell-chat")
         };
@@ -84,7 +96,7 @@ spa.shell = (function() {
     //
     toggleChat = function (do_extend, callback) {
         var
-            px_chat_ht = jQueryMap.$chat.height(),
+            px_chat_ht = jqueryMap.$chat.height(),
             is_open = px_chat_ht === configMap.chat_extend_height,
             is_closed = px_chat_ht === configMap.chat_retract_height,
             is_sliding = !(is_open || is_closed);
@@ -95,28 +107,28 @@ spa.shell = (function() {
         }
 
         if (do_extend) {
-            jQueryMap.$chat.animate(
+            jqueryMap.$chat.animate(
                 {height: configMap.chat_extend_height},
                 configMap.chat_extend_time,
                 function () {
-                    jQueryMap.$chat.attr('title', configMap.chat_extended_title);
+                    jqueryMap.$chat.attr('title', configMap.chat_extended_title);
                     stateMap.is_chat_retracted = false;
                     if (callback) {
-                        callback(jQueryMap.$chat);
+                        callback(jqueryMap.$chat);
                     }
                 }
             );
             return true;
         }
         //Begin Retract Slider
-        jQueryMap.$chat.animate(
+        jqueryMap.$chat.animate(
             {height: configMap.chat_retract_height},
             configMap.chat_retract_time,
             function () {
-                jQueryMap.$chat.attr('title', configMap.chat_retracted_title);
+                jqueryMap.$chat.attr('title', configMap.chat_retracted_title);
                 stateMap.is_chat_retracted = true;
                 if (callback) {
-                    callback(jQueryMap.$chat);
+                    callback(jqueryMap.$chat);
                 }
             }
         );
@@ -185,7 +197,7 @@ spa.shell = (function() {
     };
 // End DOM method /changeAnchorPart/
 
-    //End DOM method /setJqueryMap/
+    //End DOM method /setjqueryMap/
     //------------------------------END DOM METHODS------------------------------//
 
     //------------------------------BEGIN EVENT HANDLERS------------------------------//
@@ -193,7 +205,7 @@ spa.shell = (function() {
 // Begin Event handler /onHashchange/
 // Purpose : Handles the hashchange event
 // Arguments:
-//   * event - jQuery event object.
+//   * event - jquery event object.
 // Settings : none
 // Returns  : false
 // Action   :
@@ -256,11 +268,11 @@ spa.shell = (function() {
     initModule = function ($container) {
         stateMap.$container = $container;
         $container.html(configMap.main_html);
-        setJqueryMap();
+        setjqueryMap();
 
         //Begin initialize chat slider
         stateMap.is_chat_retracted = true;
-        jQueryMap.$chat
+        jqueryMap.$chat
             .attr("title", configMap.chat_retracted_title)
             .click(onClickChat);
         //End initialize chat slider
@@ -269,6 +281,10 @@ spa.shell = (function() {
         $.uriAnchor.configModule({
             schema_map: configMap.anchor_schema_map
         });
+
+        // configure and initialize feature modules
+        spa.chat.configModule({});
+        spa.chat.initModule(jqueryMap.$chat);
 
         // Handle URI anchor change events.
         // This is done /after/ all feature modules are configured
